@@ -21,6 +21,8 @@
 //특수한 걸 만드는 사람이 아닌 이상 거의 다 기능을 이미 나와 있는 것들이 많다.
 //잘 쓰면 빠르고 좋은 효과를 볼 수 있다.
 
+
+
 //모듈
 //패키지는 클래스의 묶음, 패키지의 모임이 모듈
 //기능들의 모임, 파일의 모임
@@ -59,15 +61,20 @@ const PORT = 3000;
 server.listen(PORT, () => {
     console.log('port : ', PORT);
 });
+
 //server 객체의 준비가 되면 listen함수로 해당 포트에 서버를 대기시킨다.
 //서버를 대기시키는 이유는 클라이언트에서 요청이 오면 서버가 받아서 처리할 수 있다.
 //여기 들어가는 매개변수는 (포트번호, 호스트의 이름, 백 로그, 콜백 함수)이렇게 있다.
 
 //이렇게만 해도 웹 서버가 열린다.
 
+
+
 //node.js코딩을 해볼 수 있는 곳 테스트용 코드들
 //코드 샌드박스, glitch 등등
 //노드 서버를 바로 볼 수 있고 코딩도 바로바로 테스트 해볼 수 있다.
+
+
 
 //glitch 장점
 //https 검증도 되어있는 웹 서버를 테스트로 사용해 볼 수 있다.
@@ -77,3 +84,43 @@ server.listen(PORT, () => {
 //테스트용 링크가 필요하면 preview 버튼 눌렀을 때 previw in a new window 이 버튼을 누르면
 //클라이언트 요청을 보내볼 웹서버 주소로 접속이 된다.
 //그래서 테스트에 용이하게 사용할 수 있다.
+
+
+
+//node.js 버전관리
+//버전관리 하는 방법 서버노드는 최신인데 로컬노드가 구버전이면 최신버전은 기능이 있는데 구버전에 없을 경우에 기능이 실행되지 않는다.
+//이런 버전 문제가 생겼을 경우 해결해주는 아이가 있다(물론 우리가 조작 및 설정이 필요하다)
+//nvm(node version manager)
+//맥 tj/n(node version manager)
+//윈도우에선 https://github.com/coreybutler/nvm-windows/releases 에서 밑으로 스크롤 하고 nvm-setup.zip 설치하고
+//이전 버전 보려면 https://nodejs.org/ko/download/releases/
+//
+//nvm이 잘 설치 되어있는지 확인 nvm -v 버전 확인
+//nvm에 설치되어있는 버전 확인 명령어
+//nvm ls
+
+//nvm 변경할 node 버전 설치 명령어
+//nvm install v 여기에 해당버전
+
+//node 설치된 버전을 적용된 명령어 버전을 바꿔주는 명령어
+//nvm use 바꿀 버전
+
+//state 오류가 발생하면 cmd를 관리자 권한으로 실행해야 한다.
+
+// ex)
+//nvm -v
+//nvm ls
+//nvm install v16.16.0 (버전이 있다고 가정)
+//nvm use v.16.16.0 (관리자 권한으로 실행)
+
+
+
+/*
+    npm install -g n 설치 명령어
+    node -v
+    nvm list available
+    nvm install 17.3.0 (nvm install 원하는 버전)
+    nvm list
+    nvm use 17.3.0
+    node -v
+*/
