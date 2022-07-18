@@ -33,3 +33,22 @@
 //node.js에서 모듈을 가져오는 방법 require함수를 사용해서 가져온다
 //require(경로나 이름);
 const http = require("http");
+
+//http객체 안의 createServer함수를 사용해서 서버를 만듦
+const server = http.createServer((req, res) => {
+    //req 요청값
+    //404 500 이런 오류들
+    //http에서 ok를 나타내는 번호가 200번이라서
+    req.statusCode = 200;
+    //http 상태 코드
+    //100번 때 : 정보응답
+    //200번 때 : 성공응답
+    //300번 때 : 리다이렉션 메시지, 요청한 url이 변경됐을 때
+    //400번 때 : 클라이언트상의 오류, 클라이언트에 오류가 있을 때
+    //500번 때 : 서버 오류 응답, 서버에 오류가 있을 때
+    //write함수 문자를 써서 보내주는 함수
+    res.write('123');
+    //end끝맺음 매개변수 문자를 보내주면서 끝
+    res.end('456');
+    
+})
