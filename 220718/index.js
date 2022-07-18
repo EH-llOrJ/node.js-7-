@@ -50,5 +50,15 @@ const server = http.createServer((req, res) => {
     res.write('123');
     //end끝맺음 매개변수 문자를 보내주면서 끝
     res.end('456');
-    
-})
+});
+
+const PORT = 3000;
+
+//서버가 되는 server에 함수를 사용한다. 서버를 열어줌
+//listen함수로 서버를 열어줌
+server.listen(PORT, () => {
+    console.log('port : ', PORT);
+});
+//server 객체의 준비가 되면 listen함수로 해당 포트에 서버를 대기시킨다.
+//서버를 대기시키는 이유는 클라이언트에서 요청이 오면 서버가 받아서 처리할 수 있다.
+//여기 들어가는 매개변수는 (포트번호, 호스트의 이름, 백 로그, 콜백 함수)이렇게 있다.
