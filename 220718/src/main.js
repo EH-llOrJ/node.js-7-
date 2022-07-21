@@ -88,7 +88,12 @@ const server = http.createServer((req, res) => {
     case "/mypage":
       res.end("my page 마이페이지");
       break;
-
+    case "/add":
+      // (name, number, series)VALUES(?, ?, ?) 작성하면 이렇게 밸류의 값을 두번째 배열 타입의 매개변수로 추가할 수 있다.
+      // eslint-disable-next-line no-case-declarations
+      const sql = "INSERT INTO products (name, number, series)VALUES(?, ?, ?)";
+      temp.query(sql, ["이름", "123", "123"]);
+      break;
     default:
       break;
   }
