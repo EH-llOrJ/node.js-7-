@@ -68,7 +68,7 @@ const server = http.createServer((req, res) => {
   ----------------------------------------
   npm install --save-dev nodemon
   npm install -g nodemon (이걸로 하자)
-  (글로벌로 설치 안하면 npm start할 때 들어가 있는 패키지 제이슨안에 src/ 이 경로가 안 먹힘)
+  (글로벌로 설치 안하면 npm start할 때 들어가 있는 패키지 제이슨안에 src/ 이런 경로가 안 먹힘)
   ----------------------------------------
   */
   const URL = req.url;
@@ -84,7 +84,6 @@ const server = http.createServer((req, res) => {
           console.log(JSON.stringify(data));
         }
       });
-      res.end("shop page 상점");
       break;
     case "/mypage":
       res.end("my page 마이페이지");
