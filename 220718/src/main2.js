@@ -25,6 +25,7 @@ npm i ejs
 const ejs = require("ejs");
 
 // fs는 파일 읽기 쓰기를 쉽게 도와주는 모듈
+const fs = require("fs");
 
 /*
 mysql
@@ -63,7 +64,23 @@ app.get("/", (req, res) => {
   console.log(req);
   // http에선 end함수로 보내고 끝냈지만
   // express에서는 send로 보내고 끝낸다.
-  res.send("1111");
+  // fs 모듈로 파일을 읽어온다.
+  // fs 모듈이 readFile 파일을 읽어오는 함수
+  // 매개변수 첫 번째 파일의 경로 이름
+  // 두 번째는 인코딩 방식
+  // 세번째는 콜백 함수
+  fs.readFile("src/list.html", "utf-8", (err, data) => {
+    // ejs render함수로 해당 불러온 파일을 그려준다.
+    temp.query("SELECT * FROM products", (err, result) => {
+      // ejs render함수로 해당 불러온 파일을 그려준다.
+      // ejs 두번째 매개변수로 데이터를 전달할 수 있다.
+      res.send(
+        ejs.render(data, {
+          data: result,
+        })
+      );
+    });
+  });
 });
 
 app.get("/list", (req, res) => {
