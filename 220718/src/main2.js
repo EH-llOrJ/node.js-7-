@@ -33,8 +33,33 @@ mysql
 -----------------------------------------
 npm i mysql2
 -----------------------------------------
+
+
+body-parser는
+요청과 응답사이에서 공통적인 기능을 해주는
+미들웨어이다. 데이터를 body라는 객체 안에 담아서
+요청 응답을 받을 수 있게 해준다고 보면 된다.
+설치 명령어
+-----------------------------------------
+npm i body-parser
+-----------------------------------------
 */
+
+// express 함수를 실행해서 반환 값을 app에 담아줌
+const app = express();
+const bodyParser = require("body-parser");
+
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+  // extended의 옵션
+  // true : expresss에 기본 내장된 쿼리 스트링 모듈을 사용한다.
+  // false : 쿼리 스트링 모듈의 기능이 좀 더 확장된 qs모듈을 사용한다.
+);
+
 const mysql = require("mysql2");
+
 const temp = mysql.createConnection({
   user: "root",
   password: "xogns",
@@ -50,9 +75,6 @@ temp.query("SELECT * FROM products", (err, res) => {
     console.log(res);
   }
 });
-
-// express 함수를 실행해서 반환 값을 app에 담아줌
-const app = express();
 
 const PORT = 4000;
 
@@ -83,9 +105,28 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/list", (req, res) => {
-  res.send("list page");
+app.get("/insert", (req, res) => {
+  fs.readFile("src/insert.html", "utf-8", (err, data) => {
+    res.send(data);
+  });
 });
+
+app.post("/insert", (req, res) => {
+  const data = req.body;
+  // body객체 안에 from에서 보내준 데이터는 input들의 name이 키값
+  // 해당 input의 value값으로 전달된다.
+  const sql = "INSERT INTO products (name, number, series) VALUES(?,?,?)";
+  temp.query(sql, [data.name, data.number, data.series], () => {
+    // url 경로를 redirect 함수의 매개변수 경로로 이동한다.
+    res.redirect("/");
+  });
+  //   console.log(data);
+  //   res.send(data);
+});
+
+// app.get("/insert", (req, res) => {
+//   res.send("list page");
+// });
 
 app.listen(PORT, () => {
   console.log("server start");
