@@ -193,6 +193,19 @@ app.get("/edit/:id", (req, res) => {
   });
 });
 
+app.post("/edit/:id", (req, res) => {
+  const { name, number, series } = req.body;
+  const sql = "UPDATE products SET name=?, number=?, series=? WHERE id=?";
+  temp.query(
+    sql,
+    // const 키값 안 받으면 이렇게[req.body.name, req.body.number, req.body.series, req.params.id]
+    [name, number, series, req.params.id],
+    () => {
+      res.redirect("/");
+    }
+  );
+});
+
 app.listen(PORT, () => {
   console.log("server start");
 });
