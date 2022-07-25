@@ -128,6 +128,34 @@ app.post("/insert", (req, res) => {
 //   res.send("list page");
 // });
 
+app.get("/delete/:id", (req, res) => {
+  // url요청에서 파라메터를 뽑을 수 있는데
+  // req요청의 값을 이용할 수 있다.
+  // params는 매개변수
+  /*
+  http://localhost:4000/delete/1 이런 방식이면
+  /delete/:id 이 주소에서 id가 params 키값이고
+  http://localhost:4000/delete/1 실제로 요청한 url의
+  /:id 이 자리에 있는 값이 value이다.
+  {params:{id:1}} 그래서 이렇게 값을 받을 수 있다.
+  AUTO_INCREMENT도 같이 증가를 하고 값이 남아있는데
+  컬럼을 추가할 때마다 id가 생성이 자동으로 되고 AUTO_INCREMENT도 증가를 했고
+  UPDATE와 ALTER의 차이는 둘 다 수정하는 명령어이긴 한데
+  UPDATE(데이터 명령어)의 명령어는 데이터 베이스의 관계에 저장된 데이터를 수정하는 것
+  ALTER(데이터의 정의 명령어) 데이터베이스의 관계 구조를 수정하는데 사용된다.
+  */
+  const sql = "DELETE FROM products WHERE id=?";
+  temp.query(sql, [req.params.id], () => {
+    temp.query("SET @CNT = 0;", () => {
+      temp.query("UPDATE products SET products.id = @CNT:=@CNT+1", () => {
+        temp.query("ALTER TABLE products AUTO_INCREMENT = 0", () => {
+          res.redirect("/");
+        });
+      });
+    });
+  });
+});
+
 app.listen(PORT, () => {
   console.log("server start");
 });
