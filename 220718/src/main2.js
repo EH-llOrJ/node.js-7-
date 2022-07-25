@@ -64,12 +64,27 @@ const temp = mysql.createConnection({
   user: "root",
   password: "xogns",
   database: "test5",
+  /*
+  다중 쿼리문을 사용하려면 설정하는 옵션
+  multipleStatements : 다중 쿼리문을 사용 할 수 있도록 하는 옵션 true, false
+  */
+  multipleStatements: true,
 });
 
 temp.query("SELECT * FROM products", (err, res) => {
   if (err) {
     const sql =
       "CREATE TABLE products(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(20), number VARCHAR(20), series VARCHAR(20))";
+    temp.query(sql);
+  } else {
+    console.log(res);
+  }
+});
+
+temp.query("SELECT * FROM products2", (err, res) => {
+  if (err) {
+    const sql =
+      "CREATE TABLE products2(id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(20), number VARCHAR(20), series VARCHAR(20))";
     temp.query(sql);
   } else {
     console.log(res);
@@ -145,14 +160,36 @@ app.get("/delete/:id", (req, res) => {
   ALTER(데이터의 정의 명령어) 데이터베이스의 관계 구조를 수정하는데 사용된다.
   */
   const sql = "DELETE FROM products WHERE id=?";
+  const sql2 = "SET @CNT = 0;";
+  const sql3 = "UPDATE products SET products.id = @CNT:=@CNT+1;";
+  const sql4 = "ALTER TABLE products AUTO_INCREMENT = 0;";
+  // 안에 세미콜론 넣어야 함
+
   temp.query(sql, [req.params.id], () => {
-    temp.query("SET @CNT = 0;", () => {
-      temp.query("UPDATE products SET products.id = @CNT:=@CNT+1", () => {
-        temp.query("ALTER TABLE products AUTO_INCREMENT = 0", () => {
-          res.redirect("/");
-        });
-      });
+    temp.query(sql2 + sql3 + sql4, () => {
+      res.redirect("/");
     });
+  });
+});
+
+app.get("/test", (req, res) => {
+  const sql = "SELECT * FROM products";
+  const sql2 = "SELECT * FROM products2";
+  temp.query(sql + sql2, (err, result) => {
+    console.log(result[0]);
+    console.log(result[1]);
+  });
+});
+
+app.get("/edit/:id", (req, res) => {
+  fs.readFile("src/edit.html", "utf-8", (err, data) => {
+    temp.query(
+      "SELECT * FROM products WHERE id = ?",
+      [req.params.id],
+      (_err, result) => {
+        res.send(ejs.render(data, { data: result[0] }));
+      }
+    );
   });
 });
 
