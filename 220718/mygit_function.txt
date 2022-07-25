@@ -1,0 +1,19 @@
+1. git 기본 터미널 설정
+
+git config --global core.editor "code --wait"
+깃배쉬 전역(global)에서 기본 편집기를 vscode로 설정한다는 의미?
+
+컨트롤 + 쉬프트 + P로 팔레트를 열고
+Open Settings(JSON)에 들어간 후
+
+"terminal.integrated.defaultProfile.windows": "Git Bash",
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+    },
+    "eslint.format.enable": true,
+    "editor.formatOnSave": true,
+
+내용을 추가해주면 된다.
+
+2. git 기본 브런치를 main으로 변경하기
+git config --global init.defaultBranch main
